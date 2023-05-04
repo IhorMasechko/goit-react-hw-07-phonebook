@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  fetchContacts,
-  addContact,
-  delContact,
-  toggleCompleted,
-} from './operations';
+import { fetchContacts, addContact, delContact } from './operations';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -12,48 +7,43 @@ export const contactsSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
-    filter: '',
   },
 
   extraReducers: builder => {
     builder
-      .addCase(fetchContacts.pending, store => {
-        store.isLoading = true;
+      .addCase(fetchContacts.pending, state => {
+        state.isLoading = true;
       })
-      .addCase(fetchContacts.fulfilled, (store, { payload }) => {
-        store.isLoading = false;
-        store.items = payload;
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items = payload;
       })
-      .addCase(fetchContacts.rejected, (store, { payload }) => {
-        store.isLoading = false;
-        store.error = payload;
+      .addCase(fetchContacts.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       })
-      .addCase(addContact.pending, store => {
-        store.isLoading = true;
+      .addCase(addContact.pending, state => {
+        state.isLoading = true;
       })
-      .addCase(addContact.fulfilled, (store, { payload }) => {
-        store.isLoading = false;
-        store.items.push(payload);
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items.push(payload);
       })
-      .addCase(addContact.rejected, (store, { payload }) => {
-        store.isLoading = false;
-        store.error = payload;
+      .addCase(addContact.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       })
-      .addCase(delContact.pending, store => {
-        store.isLoading = true;
+      .addCase(delContact.pending, state => {
+        state.isLoading = true;
       })
-      .addCase(delContact.fulfilled, (store, { payload }) => {
-        store.isLoading = false;
-        const index = store.items.findIndex(item => item.id === payload);
-        store.items.splice(index, 1);
+      .addCase(delContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        const index = state.items.findIndex(item => item.id === payload);
+        state.items.splice(index, 1);
       })
-      .addCase(delContact.rejected, (store, { payload }) => {
-        store.isLoading = false;
-        store.error = payload;
-      })
-      .addCase(toggleCompleted.rejected, (store, { payload }) => {
-        store.isLoading = false;
-        store.error = payload;
+      .addCase(delContact.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       });
   },
 });
